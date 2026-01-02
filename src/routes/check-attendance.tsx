@@ -48,7 +48,7 @@ function CheckAttendance() {
 
     try {
       // Find student by PRN and email
-      const foundStudent = await convex.query(api.student.findStudentByCredentials, {
+      const foundStudent = await convex?.query(api.student.findStudentByCredentials, {
         prn: formData.prn,
         email: formData.email,
       });
@@ -61,12 +61,13 @@ function CheckAttendance() {
       setStudent(foundStudent);
 
       // Get attendance records for the student
-      const records = await convex.query(api.student.getStudentAttendance, {
+      const records = await convex?.query(api.student.getStudentAttendance, {
         studentId: foundStudent._id,
       });
 
       // Transform records to match expected interface
-      const transformedRecords = records
+      if(records){
+        const transformedRecords = records 
         .filter((record): record is NonNullable<typeof record> => record !== null)
         .map((record) => ({
           attendance: {
@@ -85,8 +86,8 @@ function CheckAttendance() {
             code: record.class.code,
           },
         }));
-
       setAttendanceRecords(transformedRecords);
+      }
     } catch (err) {
       console.error('Error fetching attendance:', err);
       setError('An error occurred while fetching attendance data.');

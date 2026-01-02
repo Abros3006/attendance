@@ -4,22 +4,29 @@ import { getAuth } from '../authkit/serverFunctions';
 
 export const Route = createFileRoute('/faculty')({
   component: FacultyDashboard,
-loader: async () => {
-    const { user } = await getAuth();
+  loader: async () => {
+    try {
+      const { user } = await getAuth();
 
-    if (!user) {
+      if (!user) {
+        throw redirect({
+          to: '/',
+        });
+      }
+
+      return {
+        user: {
+          id: user.id,
+          email: user.email,
+          firstName: user.firstName
+        },
+      };
+    } catch (error) {
+      console.error('Auth error in faculty loader:', error);
       throw redirect({
         to: '/',
       });
     }
-
-    return {
-      user: {
-        id: user.id,
-        email: user.email,
-        firstName: user.firstName
-      },
-    };
   },
 });
 
