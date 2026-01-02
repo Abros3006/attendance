@@ -1,5 +1,3 @@
-import { Box, Button, Card, Container, Flex, Theme } from '@radix-ui/themes';
-import '@radix-ui/themes/styles.css';
 import { HeadContent, Link, Outlet, Scripts, createRootRoute } from '@tanstack/react-router';
 import { TanStackRouterDevtools } from '@tanstack/react-router-devtools';
 import { Suspense } from 'react';
@@ -7,11 +5,11 @@ import { getAuth, getSignInUrl } from '../authkit/serverFunctions';
 import SignInButton from '../components/sign-in-button';
 import type { ReactNode } from 'react';
 import ConvexProvider from '../integrations/convex/provider'
+import '../styles.css'
 
 export const Route = createRootRoute({
   beforeLoad: async () => {
     const { user } = await getAuth();
-
     return { user };
   },
   head: () => ({
@@ -24,7 +22,7 @@ export const Route = createRootRoute({
         content: 'width=device-width, initial-scale=1',
       },
       {
-        title: 'AuthKit Example in TanStack Start',
+        title: 'MIT WPU Attendance System',
       },
     ],
   }),
@@ -37,48 +35,84 @@ export const Route = createRootRoute({
     };
   },
   component: RootComponent,
-  notFoundComponent: () => <div>Not Found</div>,
+  notFoundComponent: () => (
+    <div className="min-h-screen flex items-center justify-center bg-background">
+      <div className="matte-card p-8 text-center">
+        <h1 className="text-2xl font-bold text-foreground mb-4">Page Not Found</h1>
+        <p className="text-matte mb-6">The page you're looking for doesn't exist.</p>
+        <Link to="/" className="matte-button inline-block">
+          Go Home
+        </Link>
+      </div>
+    </div>
+  ),
 });
 
 function RootComponent() {
   const { user, url } = Route.useLoaderData();
   return (
     <RootDocument>
-      <Theme accentColor="iris" panelBackground="solid" style={{ backgroundColor: 'var(--gray-1)' }}>
-        <Container style={{ backgroundColor: 'var(--gray-1)' }}>
-          <Flex direction="column" gap="5" p="5" height="100vh">
-            <Box asChild flexGrow="1">
-              <Card size="4">
-                <Flex direction="column" height="100%">
-                  <Flex asChild justify="between">
-                    <header>
-                      <Flex gap="4">
-                        <Button asChild variant="soft">
-                          <Link to="/">Home</Link>
-                        </Button>
+      <div className="min-h-screen bg-background">
+        {/* Header */}
+        <header className="border-b border-border/50 bg-background/80 backdrop-blur-sm sticky top-0 z-50">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex justify-between items-center h-16">
+              {/* Logo and Brand */}
+              <div className="flex items-center space-x-4">
+                <Link to="/" className="flex items-center space-x-2 hover:opacity-80 transition-opacity">
+                  <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+                    <svg className="w-5 h-5 text-primary-foreground" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                    </svg>
+                  </div>
+                  <span className="text-xl font-semibold text-foreground">MIT WPU</span>
+                </Link>
+              </div>
 
-                        <Button asChild variant="soft">
-                          <Link to="/account">Account</Link>
-                        </Button>
-                      </Flex>
+              {/* Navigation */}
+              <nav className="hidden md:flex items-center space-x-6">
+                <Link 
+                  to="/" 
+                  className="text-muted-foreground hover:text-foreground transition-colors font-medium"
+                >
+                  Home
+                </Link>
+                <a 
+                  href="/check-attendance" 
+                  className="text-muted-foreground hover:text-foreground transition-colors font-medium"
+                >
+                  Check Attendance
+                </a>
+              </nav>
 
-                      <Suspense fallback={<div>Loading...</div>}>
-                        <SignInButton user={user} url={url} />
-                      </Suspense>
-                    </header>
-                  </Flex>
+              {/* Auth Section */}
+              <div className="flex items-center space-x-4">
+                <Suspense fallback={
+                  <div className="w-8 h-8 bg-muted rounded animate-pulse"></div>
+                }>
+                  <SignInButton user={user} url={url} />
+                </Suspense>
+              </div>
+            </div>
+          </div>
+        </header>
 
-                  <Flex flexGrow="1" align="center" justify="center">
-                    <main>
-                      <Outlet />
-                    </main>
-                  </Flex>
-                </Flex>
-              </Card>
-            </Box>
-          </Flex>
-        </Container>
-      </Theme>
+        {/* Main Content */}
+        <main className="flex-1">
+          <Outlet />
+        </main>
+
+        {/* Footer */}
+        <footer className="border-t border-border/50 bg-background/50 backdrop-blur-sm">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div className="text-center">
+              <p className="text-matte text-sm">
+                © 2024 MIT WPU Attendance System. Designed for academic excellence.
+              </p>
+            </div>
+          </div>
+        </footer>
+      </div>
       <TanStackRouterDevtools position="bottom-right" />
     </RootDocument>
   );
@@ -91,11 +125,10 @@ function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
         <HeadContent />
       </head>
       <body>
-      <ConvexProvider>
-        {children}
-        <Scripts />
-      </ConvexProvider>
-
+        <ConvexProvider>
+          {children}
+          <Scripts />
+        </ConvexProvider>
       </body>
     </html>
   );
