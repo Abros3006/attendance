@@ -1,14 +1,128 @@
 import { createFileRoute } from '@tanstack/react-router';
+import { useState } from 'react';
+import { handleConvexError, isConvexOfflineError } from '../lib/convex';
 
 export const Route = createFileRoute('/register-class')({
   component: RegisterClass,
 });
 
+interface ClassData {
+  _id: string;
+  name: string;
+  code: string;
+  description?: string;
+  maxCapacity: number;
+  currentEnrollment: number;
+  semester: string;
+  year: number;
+}
+
 function RegisterClass() {
-  const handleSubmit = (e: React.FormEvent) => {
+  const [formData, setFormData] = useState({
+    classId: '',
+    prn: '',
+    email: '',
+    name: '',
+  });
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState<string | null>(null);
+  const [classData, setClassData] = useState<ClassData | null>(null);
+  const [agreedToTerms, setAgreedToTerms] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // TODO: Implement class registration logic
-    console.log('Registering for class...');
+    
+    if (!agreedToTerms) {
+      setError('Please agree to the terms and conditions to continue.');
+      return;
+    }
+
+    setLoading(true);
+    setError(null);
+    setSuccess(null);
+    setClassData(null);
+
+    try {
+      // For now, we'll simulate the API call
+      // In a real implementation, you would call the Convex functions here
+      await new Promise(resolve => setTimeout(resolve, 1000)); // Simulate API delay
+      
+      // TODO: Replace with actual Convex calls
+      // 1. Find class by ID
+      // const foundClass = await convex.query('class:findClassById', {
+      //   classId: formData.classId,
+      // });
+
+      // 2. Create or find student
+      // const student = await convex.mutation('student:createOrFindStudent', {
+      //   email: formData.email,
+      //   name: formData.name,
+      //   prn: formData.prn,
+      //   year: 3, // TODO: Get from user input or database
+      //   department: 'Computer Science', // TODO: Get from user input or database
+      // });
+
+      // 3. Check if already enrolled
+      // const existingEnrollment = await convex.query('class:checkEnrollment', {
+      //   classId: foundClass._id,
+      //   studentId: student._id,
+      // });
+
+      // 4. Enroll student
+      // await convex.mutation('class:enrollStudentInClass', {
+      //   classId: foundClass._id,
+      //   studentId: student._id,
+      // });
+
+      // Simulate class not found for demo
+      setError('Class not found. Please check the Class ID and try again.');
+    } catch (err) {
+      console.error('Error registering for class:', err);
+      setError('An error occurred while registering for the class.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleTermsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setAgreedToTerms(e.target.checked);
+  };
+
+  const handleCheckClass = async () => {
+    if (!formData.classId) {
+      setError('Please enter a Class ID first.');
+      return;
+    }
+
+    setLoading(true);
+    setError(null);
+    setClassData(null);
+
+    try {
+      // For now, we'll simulate the API call
+      await new Promise(resolve => setTimeout(resolve, 500)); // Simulate API delay
+      
+      // TODO: Replace with actual Convex call
+      // const foundClass = await convex.query('class:findClassById', {
+      //   classId: formData.classId,
+      // });
+
+      // Simulate class not found for demo
+      setError('Class not found. Please check the Class ID.');
+    } catch (err) {
+      console.error('Error checking class:', err);
+      setError('An error occurred while checking the class.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -37,14 +151,26 @@ function RegisterClass() {
                 <label htmlFor="classId" className="block text-sm font-medium text-foreground mb-2">
                   Class ID
                 </label>
-                <input
-                  type="text"
-                  id="classId"
-                  name="classId"
-                  required
-                  placeholder="Enter the class ID provided by your faculty"
-                  className="w-full px-4 py-3 bg-input border border-border rounded-lg text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
-                />
+                <div className="flex space-x-2">
+                  <input
+                    type="text"
+                    id="classId"
+                    name="classId"
+                    required
+                    placeholder="Enter the class ID provided by your faculty"
+                    value={formData.classId}
+                    onChange={handleInputChange}
+                    className="flex-1 px-4 py-3 bg-input border border-border rounded-lg text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+                  />
+                  <button
+                    type="button"
+                    onClick={handleCheckClass}
+                    disabled={loading || !formData.classId}
+                    className="matte-button-secondary px-4 py-3 disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    Check
+                  </button>
+                </div>
               </div>
 
               <div>
@@ -57,6 +183,8 @@ function RegisterClass() {
                   name="prn"
                   required
                   placeholder="Enter your PRN number"
+                  value={formData.prn}
+                  onChange={handleInputChange}
                   className="w-full px-4 py-3 bg-input border border-border rounded-lg text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
                 />
               </div>
@@ -71,6 +199,8 @@ function RegisterClass() {
                   name="email"
                   required
                   placeholder="Enter your email address"
+                  value={formData.email}
+                  onChange={handleInputChange}
                   className="w-full px-4 py-3 bg-input border border-border rounded-lg text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
                 />
               </div>
@@ -85,6 +215,8 @@ function RegisterClass() {
                   name="name"
                   required
                   placeholder="Enter your full name"
+                  value={formData.name}
+                  onChange={handleInputChange}
                   className="w-full px-4 py-3 bg-input border border-border rounded-lg text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
                 />
               </div>
@@ -96,6 +228,8 @@ function RegisterClass() {
                 <input
                   type="checkbox"
                   required
+                  checked={agreedToTerms}
+                  onChange={handleTermsChange}
                   className="mt-1 w-4 h-4 text-primary bg-input border-border rounded focus:ring-primary focus:ring-2"
                 />
                 <span className="text-sm text-muted-foreground">
@@ -108,9 +242,10 @@ function RegisterClass() {
             {/* Submit Button */}
             <button
               type="submit"
-              className="matte-button-cool w-full py-3 text-lg"
+              disabled={loading || !agreedToTerms}
+              className="matte-button-cool w-full py-3 text-lg disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              Join Class
+              {loading ? 'Joining...' : 'Join Class'}
             </button>
           </form>
         </div>
@@ -166,6 +301,60 @@ function RegisterClass() {
             Having trouble joining a class? Contact your faculty member for the correct Class ID.
           </p>
         </div>
+
+        {/* Error/Success Messages */}
+        {error && (
+          <div className="mt-6 matte-card p-4 border-l-4 border-red-500 bg-red-500/10">
+            <div className="flex items-center">
+              <svg className="w-5 h-5 text-red-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              <p className="text-red-500">{error}</p>
+            </div>
+          </div>
+        )}
+
+        {success && (
+          <div className="mt-6 matte-card p-4 border-l-4 border-green-500 bg-green-500/10">
+            <div className="flex items-center">
+              <svg className="w-5 h-5 text-green-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              <p className="text-green-500">{success}</p>
+            </div>
+          </div>
+        )}
+
+        {/* Class Information */}
+        {classData && (
+          <div className="mt-6 matte-card-accent p-6">
+            <h3 className="text-xl font-semibold text-foreground mb-4">Class Information</h3>
+            <div className="grid md:grid-cols-2 gap-4">
+              <div>
+                <p className="text-muted-foreground text-sm">Class Name</p>
+                <p className="text-foreground font-medium">{classData.name}</p>
+              </div>
+              <div>
+                <p className="text-muted-foreground text-sm">Class Code</p>
+                <p className="text-foreground font-medium">{classData.code}</p>
+              </div>
+              <div>
+                <p className="text-muted-foreground text-sm">Semester</p>
+                <p className="text-foreground font-medium">{classData.semester} {classData.year}</p>
+              </div>
+              <div>
+                <p className="text-muted-foreground text-sm">Capacity</p>
+                <p className="text-foreground font-medium">{classData.currentEnrollment}/{classData.maxCapacity} students</p>
+              </div>
+              {classData.description && (
+                <div className="md:col-span-2">
+                  <p className="text-muted-foreground text-sm">Description</p>
+                  <p className="text-foreground font-medium">{classData.description}</p>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

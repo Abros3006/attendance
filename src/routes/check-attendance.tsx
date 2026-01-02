@@ -1,14 +1,105 @@
 import { createFileRoute } from '@tanstack/react-router';
+import { useState } from 'react';
+import { handleConvexError, isConvexOfflineError } from '../lib/convex';
 
 export const Route = createFileRoute('/check-attendance')({
   component: CheckAttendance,
 });
 
+interface Student {
+  _id: string;
+  name: string;
+  email: string;
+  prn: string;
+  year: number;
+  department: string;
+}
+
+interface AttendanceRecord {
+  attendance: {
+    status: 'present' | 'absent';
+    markedAt: number;
+    isEdited: boolean;
+    editedAt?: number;
+  };
+  session: {
+    lectureDate: string;
+    startTime: string;
+    uniqueCode: string;
+  };
+  class: {
+    name: string;
+    code: string;
+  };
+}
+
 function CheckAttendance() {
-  const handleSubmit = (e: React.FormEvent) => {
+  const [formData, setFormData] = useState({ prn: '', email: '' });
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [student, setStudent] = useState<Student | null>(null);
+  const [attendanceRecords, setAttendanceRecords] = useState<AttendanceRecord[]>([]);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // TODO: Implement attendance lookup logic
-    console.log('Looking up attendance...');
+    setLoading(true);
+    setError(null);
+    setStudent(null);
+    setAttendanceRecords([]);
+
+    try {
+      // For now, we'll simulate the API call
+      // In a real implementation, you would call the Convex functions here
+      await new Promise(resolve => setTimeout(resolve, 1000)); // Simulate API delay
+      
+      // TODO: Replace with actual Convex calls
+      // const foundStudent = await convex.query('student:findStudentByCredentials', {
+      //   prn: formData.prn,
+      //   email: formData.email,
+      // });
+
+      // Simulate student not found for demo
+      setError('Student not found. Please check your PRN and email address.');
+    } catch (err) {
+      console.error('Error fetching attendance:', err);
+      setError('An error occurred while fetching attendance data.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  // Calculate attendance statistics
+  const totalSessions = attendanceRecords.length;
+  const presentSessions = attendanceRecords.filter(record => record.attendance.status === 'present').length;
+  const attendancePercentage = totalSessions > 0 ? Math.round((presentSessions / totalSessions) * 100) : 0;
+
+  const formatDate = (dateString: string) => {
+    return new Date(dateString).toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+    });
+  };
+
+  const formatTime = (timeString: string) => {
+    return timeString;
+  };
+
+  const formatDateTime = (timestamp: number) => {
+    return new Date(timestamp).toLocaleString('en-US', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+    });
   };
 
   return (
@@ -43,6 +134,8 @@ function CheckAttendance() {
                   name="prn"
                   required
                   placeholder="Enter your PRN number"
+                  value={formData.prn}
+                  onChange={handleInputChange}
                   className="w-full px-4 py-3 bg-input border border-border rounded-lg text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
                 />
               </div>
@@ -57,6 +150,8 @@ function CheckAttendance() {
                   name="email"
                   required
                   placeholder="Enter your email address"
+                  value={formData.email}
+                  onChange={handleInputChange}
                   className="w-full px-4 py-3 bg-input border border-border rounded-lg text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
                 />
               </div>
@@ -65,9 +160,10 @@ function CheckAttendance() {
             {/* Submit Button */}
             <button
               type="submit"
-              className="matte-button w-full py-3 text-lg"
+              disabled={loading}
+              className="matte-button w-full py-3 text-lg disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              Check My Attendance
+              {loading ? 'Checking...' : 'Check My Attendance'}
             </button>
           </form>
         </div>
@@ -109,6 +205,113 @@ function CheckAttendance() {
             Don't have your PRN? Contact your department office for assistance.
           </p>
         </div>
+
+        {/* Error Message */}
+        {error && (
+          <div className="mt-6 matte-card p-4 border-l-4 border-red-500 bg-red-500/10">
+            <div className="flex items-center">
+              <svg className="w-5 h-5 text-red-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              <p className="text-red-500">{error}</p>
+            </div>
+          </div>
+        )}
+
+        {/* Results Section */}
+        {student && (
+          <div className="mt-8 space-y-6">
+            {/* Student Info Card */}
+            <div className="matte-card-accent p-6">
+              <h2 className="text-2xl font-semibold text-foreground mb-4">Student Information</h2>
+              <div className="grid md:grid-cols-2 gap-4">
+                <div>
+                  <p className="text-muted-foreground text-sm">Name</p>
+                  <p className="text-foreground font-medium">{student.name}</p>
+                </div>
+                <div>
+                  <p className="text-muted-foreground text-sm">PRN</p>
+                  <p className="text-foreground font-medium">{student.prn}</p>
+                </div>
+                <div>
+                  <p className="text-muted-foreground text-sm">Email</p>
+                  <p className="text-foreground font-medium">{student.email}</p>
+                </div>
+                <div>
+                  <p className="text-muted-foreground text-sm">Department & Year</p>
+                  <p className="text-foreground font-medium">{student.department} - Year {student.year}</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Attendance Summary */}
+            <div className="matte-card p-6">
+              <h3 className="text-xl font-semibold text-foreground mb-4">Attendance Summary</h3>
+              <div className="grid md:grid-cols-3 gap-6">
+                <div className="text-center">
+                  <div className="text-3xl font-bold text-primary mb-2">{totalSessions}</div>
+                  <p className="text-muted-foreground">Total Sessions</p>
+                </div>
+                <div className="text-center">
+                  <div className="text-3xl font-bold text-green-500 mb-2">{presentSessions}</div>
+                  <p className="text-muted-foreground">Present</p>
+                </div>
+                <div className="text-center">
+                  <div className="text-3xl font-bold text-accent-cyan mb-2">{attendancePercentage}%</div>
+                  <p className="text-muted-foreground">Attendance Rate</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Attendance Records */}
+            {attendanceRecords.length > 0 && (
+              <div className="matte-card p-6">
+                <h3 className="text-xl font-semibold text-foreground mb-4">Recent Attendance Records</h3>
+                <div className="space-y-3">
+                  {attendanceRecords.slice(0, 10).map((record, index) => (
+                    <div key={index} className="flex items-center justify-between p-3 bg-background/50 rounded-lg">
+                      <div className="flex items-center space-x-3">
+                        <div className={`w-3 h-3 rounded-full ${
+                          record.attendance.status === 'present' ? 'bg-green-500' : 'bg-red-500'
+                        }`}></div>
+                        <div>
+                          <p className="text-foreground font-medium">{record.class.name} ({record.class.code})</p>
+                          <p className="text-muted-foreground text-sm">
+                            {formatDate(record.session.lectureDate)} at {formatTime(record.session.startTime)}
+                          </p>
+                        </div>
+                      </div>
+                      <div className="text-right">
+                        <p className={`font-medium ${
+                          record.attendance.status === 'present' ? 'text-green-500' : 'text-red-500'
+                        }`}>
+                          {record.attendance.status === 'present' ? 'Present' : 'Absent'}
+                        </p>
+                        <p className="text-muted-foreground text-sm">
+                          {formatDateTime(record.attendance.markedAt)}
+                        </p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                {attendanceRecords.length > 10 && (
+                  <div className="mt-4 text-center">
+                    <p className="text-muted-foreground text-sm">
+                      Showing 10 of {attendanceRecords.length} records
+                    </p>
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* No Records Message */}
+            {attendanceRecords.length === 0 && (
+              <div className="matte-card p-6 text-center">
+                <p className="text-muted-foreground">No attendance records found for this student.</p>
+              </div>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );

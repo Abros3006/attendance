@@ -8,7 +8,8 @@
  * @module
  */
 
-import type * as todos from "../todos.js";
+import type * as class_ from "../class.js";
+import type * as student from "../student.js";
 
 import type {
   ApiFromModules,
@@ -17,7 +18,8 @@ import type {
 } from "convex/server";
 
 declare const fullApi: ApiFromModules<{
-  todos: typeof todos;
+  class: typeof class_;
+  student: typeof student;
 }>;
 
 /**
