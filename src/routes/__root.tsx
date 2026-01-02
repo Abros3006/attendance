@@ -77,12 +77,18 @@ function RootComponent() {
                 >
                   Home
                 </Link>
-                <a 
-                  href="/check-attendance" 
+                <Link 
+                  to="/check-attendance" 
                   className="text-muted-foreground hover:text-foreground transition-colors font-medium"
                 >
                   Check Attendance
-                </a>
+                </Link>
+                <Link 
+                  to="/register-class" 
+                  className="text-muted-foreground hover:text-foreground transition-colors font-medium"
+                >
+                  Join Class
+                </Link>
               </nav>
 
               {/* Auth Section */}

@@ -9,8 +9,10 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as RegisterClassRouteImport } from './routes/register-class'
 import { Route as LogoutRouteImport } from './routes/logout'
 import { Route as FacultyRouteImport } from './routes/faculty'
+import { Route as CheckAttendanceRouteImport } from './routes/check-attendance'
 import { Route as AuthenticatedRouteImport } from './routes/_authenticated'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as DemoWorkosRouteImport } from './routes/demo/workos'
@@ -25,6 +27,11 @@ import { Route as DemoStartSsrSpaModeRouteImport } from './routes/demo/start.ssr
 import { Route as DemoStartSsrFullSsrRouteImport } from './routes/demo/start.ssr.full-ssr'
 import { Route as DemoStartSsrDataOnlyRouteImport } from './routes/demo/start.ssr.data-only'
 
+const RegisterClassRoute = RegisterClassRouteImport.update({
+  id: '/register-class',
+  path: '/register-class',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LogoutRoute = LogoutRouteImport.update({
   id: '/logout',
   path: '/logout',
@@ -33,6 +40,11 @@ const LogoutRoute = LogoutRouteImport.update({
 const FacultyRoute = FacultyRouteImport.update({
   id: '/faculty',
   path: '/faculty',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CheckAttendanceRoute = CheckAttendanceRouteImport.update({
+  id: '/check-attendance',
+  path: '/check-attendance',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthenticatedRoute = AuthenticatedRouteImport.update({
@@ -102,8 +114,10 @@ const DemoStartSsrDataOnlyRoute = DemoStartSsrDataOnlyRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/check-attendance': typeof CheckAttendanceRoute
   '/faculty': typeof FacultyRoute
   '/logout': typeof LogoutRoute
+  '/register-class': typeof RegisterClassRoute
   '/account': typeof AuthenticatedAccountRoute
   '/demo/convex': typeof DemoConvexRoute
   '/demo/workos': typeof DemoWorkosRoute
@@ -118,8 +132,10 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/check-attendance': typeof CheckAttendanceRoute
   '/faculty': typeof FacultyRoute
   '/logout': typeof LogoutRoute
+  '/register-class': typeof RegisterClassRoute
   '/account': typeof AuthenticatedAccountRoute
   '/demo/convex': typeof DemoConvexRoute
   '/demo/workos': typeof DemoWorkosRoute
@@ -136,8 +152,10 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteWithChildren
+  '/check-attendance': typeof CheckAttendanceRoute
   '/faculty': typeof FacultyRoute
   '/logout': typeof LogoutRoute
+  '/register-class': typeof RegisterClassRoute
   '/_authenticated/account': typeof AuthenticatedAccountRoute
   '/demo/convex': typeof DemoConvexRoute
   '/demo/workos': typeof DemoWorkosRoute
@@ -154,8 +172,10 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/check-attendance'
     | '/faculty'
     | '/logout'
+    | '/register-class'
     | '/account'
     | '/demo/convex'
     | '/demo/workos'
@@ -170,8 +190,10 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/check-attendance'
     | '/faculty'
     | '/logout'
+    | '/register-class'
     | '/account'
     | '/demo/convex'
     | '/demo/workos'
@@ -187,8 +209,10 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/_authenticated'
+    | '/check-attendance'
     | '/faculty'
     | '/logout'
+    | '/register-class'
     | '/_authenticated/account'
     | '/demo/convex'
     | '/demo/workos'
@@ -205,8 +229,10 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthenticatedRoute: typeof AuthenticatedRouteWithChildren
+  CheckAttendanceRoute: typeof CheckAttendanceRoute
   FacultyRoute: typeof FacultyRoute
   LogoutRoute: typeof LogoutRoute
+  RegisterClassRoute: typeof RegisterClassRoute
   DemoConvexRoute: typeof DemoConvexRoute
   DemoWorkosRoute: typeof DemoWorkosRoute
   ApiAuthCallbackRoute: typeof ApiAuthCallbackRoute
@@ -221,6 +247,13 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/register-class': {
+      id: '/register-class'
+      path: '/register-class'
+      fullPath: '/register-class'
+      preLoaderRoute: typeof RegisterClassRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/logout': {
       id: '/logout'
       path: '/logout'
@@ -233,6 +266,13 @@ declare module '@tanstack/react-router' {
       path: '/faculty'
       fullPath: '/faculty'
       preLoaderRoute: typeof FacultyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/check-attendance': {
+      id: '/check-attendance'
+      path: '/check-attendance'
+      fullPath: '/check-attendance'
+      preLoaderRoute: typeof CheckAttendanceRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_authenticated': {
@@ -344,8 +384,10 @@ const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRoute: AuthenticatedRouteWithChildren,
+  CheckAttendanceRoute: CheckAttendanceRoute,
   FacultyRoute: FacultyRoute,
   LogoutRoute: LogoutRoute,
+  RegisterClassRoute: RegisterClassRoute,
   DemoConvexRoute: DemoConvexRoute,
   DemoWorkosRoute: DemoWorkosRoute,
   ApiAuthCallbackRoute: ApiAuthCallbackRoute,
