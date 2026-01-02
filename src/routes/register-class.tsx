@@ -1,6 +1,8 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { useState } from 'react';
-import { handleConvexError, isConvexOfflineError } from '../lib/convex';
+import { convex, handleConvexError, isConvexOfflineError } from '../lib/convex';
+import { api } from '../../convex/_generated/api';
+import type { Id } from '../../convex/_generated/dataModel';
 
 export const Route = createFileRoute('/register-class')({
   component: RegisterClass,
@@ -44,39 +46,42 @@ function RegisterClass() {
     setClassData(null);
 
     try {
-      // For now, we'll simulate the API call
-      // In a real implementation, you would call the Convex functions here
-      await new Promise(resolve => setTimeout(resolve, 1000)); // Simulate API delay
-      
-      // TODO: Replace with actual Convex calls
       // 1. Find class by ID
-      // const foundClass = await convex.query('class:findClassById', {
-      //   classId: formData.classId,
-      // });
+      const foundClass = await convex.query(api.class.findClassById, {
+        classId: formData.classId,
+      });
+
+      if (!foundClass) {
+        setError('Class not found. Please check the Class ID and try again.');
+        return;
+      }
 
       // 2. Create or find student
-      // const student = await convex.mutation('student:createOrFindStudent', {
-      //   email: formData.email,
-      //   name: formData.name,
-      //   prn: formData.prn,
-      //   year: 3, // TODO: Get from user input or database
-      //   department: 'Computer Science', // TODO: Get from user input or database
-      // });
+      const studentId = await convex.mutation(api.student.createOrFindStudent, {
+        email: formData.email,
+        name: formData.name,
+        prn: formData.prn,
+      });
 
       // 3. Check if already enrolled
-      // const existingEnrollment = await convex.query('class:checkEnrollment', {
-      //   classId: foundClass._id,
-      //   studentId: student._id,
-      // });
+      const existingEnrollment = await convex.query(api.class.checkEnrollment, {
+        classId: foundClass._id,
+        studentId: studentId as Id<'students'>,
+      });
+
+      if (existingEnrollment) {
+        setError('You are already enrolled in this class.');
+        return;
+      }
 
       // 4. Enroll student
-      // await convex.mutation('class:enrollStudentInClass', {
-      //   classId: foundClass._id,
-      //   studentId: student._id,
-      // });
+      await convex.mutation(api.class.enrollStudentInClass, {
+        classId: foundClass._id,
+        studentId: studentId as Id<'students'>,
+      });
 
-      // Simulate class not found for demo
-      setError('Class not found. Please check the Class ID and try again.');
+      setClassData(foundClass);
+      setSuccess('Successfully enrolled in the class!');
     } catch (err) {
       console.error('Error registering for class:', err);
       setError('An error occurred while registering for the class.');
@@ -107,16 +112,17 @@ function RegisterClass() {
     setClassData(null);
 
     try {
-      // For now, we'll simulate the API call
-      await new Promise(resolve => setTimeout(resolve, 500)); // Simulate API delay
-      
-      // TODO: Replace with actual Convex call
-      // const foundClass = await convex.query('class:findClassById', {
-      //   classId: formData.classId,
-      // });
+      // Find class by ID
+      const foundClass = await convex.query(api.class.findClassById, {
+        classId: formData.classId,
+      });
 
-      // Simulate class not found for demo
-      setError('Class not found. Please check the Class ID.');
+      if (!foundClass) {
+        setError('Class not found. Please check the Class ID.');
+        return;
+      }
+
+      setClassData(foundClass);
     } catch (err) {
       console.error('Error checking class:', err);
       setError('An error occurred while checking the class.');

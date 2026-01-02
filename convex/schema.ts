@@ -40,15 +40,12 @@ export default defineSchema({
     email: v.string(),
     name: v.string(),
     prn: v.string(), // PRN number - unique identifier
-    year: v.number(), // Current year of study
-    department: v.string(),
     isActive: v.boolean(),
     createdAt: v.number(),
     updatedAt: v.number(),
   })
     .index('by_email', ['email'])
     .index('by_prn', ['prn'])
-    .index('by_year_department', ['year', 'department'])
     .index('by_active', ['isActive']),
 
   // Class students junction table - enrollment records

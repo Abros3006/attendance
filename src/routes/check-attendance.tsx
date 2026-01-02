@@ -1,6 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { useState } from 'react';
-import { handleConvexError, isConvexOfflineError } from '../lib/convex';
+import { convex, handleConvexError, isConvexOfflineError } from '../lib/convex';
+import { api } from '../../convex/_generated/api';
 
 export const Route = createFileRoute('/check-attendance')({
   component: CheckAttendance,
@@ -11,8 +12,6 @@ interface Student {
   name: string;
   email: string;
   prn: string;
-  year: number;
-  department: string;
 }
 
 interface AttendanceRecord {
@@ -48,18 +47,46 @@ function CheckAttendance() {
     setAttendanceRecords([]);
 
     try {
-      // For now, we'll simulate the API call
-      // In a real implementation, you would call the Convex functions here
-      await new Promise(resolve => setTimeout(resolve, 1000)); // Simulate API delay
-      
-      // TODO: Replace with actual Convex calls
-      // const foundStudent = await convex.query('student:findStudentByCredentials', {
-      //   prn: formData.prn,
-      //   email: formData.email,
-      // });
+      // Find student by PRN and email
+      const foundStudent = await convex.query(api.student.findStudentByCredentials, {
+        prn: formData.prn,
+        email: formData.email,
+      });
 
-      // Simulate student not found for demo
-      setError('Student not found. Please check your PRN and email address.');
+      if (!foundStudent) {
+        setError('Student not found. Please check your PRN and email address.');
+        return;
+      }
+
+      setStudent(foundStudent);
+
+      // Get attendance records for the student
+      const records = await convex.query(api.student.getStudentAttendance, {
+        studentId: foundStudent._id,
+      });
+
+      // Transform records to match expected interface
+      const transformedRecords = records
+        .filter((record): record is NonNullable<typeof record> => record !== null)
+        .map((record) => ({
+          attendance: {
+            status: record.attendance.status,
+            markedAt: record.attendance.markedAt,
+            isEdited: record.attendance.isEdited,
+            editedAt: record.attendance.editedAt,
+          },
+          session: {
+            lectureDate: record.session.lectureDate,
+            startTime: record.session.startTime,
+            uniqueCode: record.session.uniqueCode,
+          },
+          class: {
+            name: record.class.name,
+            code: record.class.code,
+          },
+        }));
+
+      setAttendanceRecords(transformedRecords);
     } catch (err) {
       console.error('Error fetching attendance:', err);
       setError('An error occurred while fetching attendance data.');
@@ -236,10 +263,6 @@ function CheckAttendance() {
                 <div>
                   <p className="text-muted-foreground text-sm">Email</p>
                   <p className="text-foreground font-medium">{student.email}</p>
-                </div>
-                <div>
-                  <p className="text-muted-foreground text-sm">Department & Year</p>
-                  <p className="text-foreground font-medium">{student.department} - Year {student.year}</p>
                 </div>
               </div>
             </div>

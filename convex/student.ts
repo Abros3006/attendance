@@ -98,8 +98,6 @@ export const createOrFindStudent = mutation({
     email: v.string(),
     name: v.string(),
     prn: v.string(),
-    year: v.number(),
-    department: v.string(),
   },
   handler: async (ctx, args) => {
     // Check if student already exists
@@ -126,8 +124,6 @@ export const createOrFindStudent = mutation({
       email: args.email,
       name: args.name,
       prn: args.prn,
-      year: args.year,
-      department: args.department,
       isActive: true,
       createdAt: Date.now(),
       updatedAt: Date.now(),
