@@ -28,7 +28,7 @@ export const Route = createRootRoute({
   }),
   loader: async ({ context }) => {
     const { user } = context;
-    const url = await getSignInUrl();
+    const url = await getSignInUrl({ data: '/faculty' });
     return {
       user,
       url,

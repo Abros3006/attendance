@@ -6,7 +6,7 @@ export const Route = createFileRoute('/')({
   component: Home,
   loader: async ({ context }) => {
     const { user } = context as { user: any };
-    const url = await getSignInUrl();
+    const url = await getSignInUrl({ data: '/faculty' });
     return { user, url };
   },
 });
