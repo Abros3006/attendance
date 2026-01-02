@@ -4,10 +4,10 @@ import { ConvexReactClient } from "convex/react";
 const convexUrl = import.meta.env.VITE_CONVEX_URL;
 
 if (!convexUrl) {
-  throw new Error("VITE_CONVEX_URL environment variable is not set");
+  console.warn("VITE_CONVEX_URL environment variable is not set. Some features may not work properly.");
 }
 
-export const convex = new ConvexReactClient(convexUrl);
+export const convex = convexUrl ? new ConvexReactClient(convexUrl) : null;
 
 // Helper function to handle Convex errors
 export function handleConvexError(error: any) {
@@ -20,4 +20,9 @@ export function handleConvexError(error: any) {
 // Helper function to check if user is offline
 export function isConvexOfflineError(error: any) {
   return error?.message?.includes("offline") || error?.code === "OFFLINE";
+}
+
+// Helper function to check if Convex is available
+export function isConvexAvailable() {
+  return convex !== null;
 }

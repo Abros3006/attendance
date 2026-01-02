@@ -10,6 +10,7 @@
 
 import type * as class_ from "../class.js";
 import type * as student from "../student.js";
+import type * as timetable from "../timetable.js";
 
 import type {
   ApiFromModules,
@@ -20,6 +21,7 @@ import type {
 declare const fullApi: ApiFromModules<{
   class: typeof class_;
   student: typeof student;
+  timetable: typeof timetable;
 }>;
 
 /**

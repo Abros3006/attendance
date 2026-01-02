@@ -1,17 +1,25 @@
-import { createFileRoute } from '@tanstack/react-router';
+import { createFileRoute, redirect } from '@tanstack/react-router';
+import { Link } from '@tanstack/react-router';
 import { getAuth } from '../authkit/serverFunctions';
 
 export const Route = createFileRoute('/faculty')({
   component: FacultyDashboard,
-  loader: async () => {
+loader: async () => {
     const { user } = await getAuth();
-    
-    // If no user is authenticated, redirect to home
+
     if (!user) {
-      throw new Response('Unauthorized', { status: 401 });
+      throw redirect({
+        to: '/',
+      });
     }
-    
-    return { user };
+
+    return {
+      user: {
+        id: user.id,
+        email: user.email,
+        firstName: user.firstName
+      },
+    };
   },
 });
 
@@ -42,9 +50,9 @@ function FacultyDashboard() {
               </div>
               <h3 className="text-lg font-semibold text-foreground mb-2">Create Class</h3>
               <p className="text-accent-warm text-sm mb-4">Create a new class and add students</p>
-              <button className="matte-button w-full">
+              <Link to="/faculty/create-class" className="matte-button w-full block text-center">
                 New Class
-              </button>
+              </Link>
             </div>
           </div>
 

@@ -9,8 +9,13 @@ import '../styles.css'
 
 export const Route = createRootRoute({
   beforeLoad: async () => {
-    const { user } = await getAuth();
-    return { user };
+    try {
+      const { user } = await getAuth();
+      return { user };
+    } catch (error) {
+      console.warn('Auth initialization error:', error);
+      return { user: null };
+    }
   },
   head: () => ({
     meta: [
@@ -27,12 +32,20 @@ export const Route = createRootRoute({
     ],
   }),
   loader: async ({ context }) => {
-    const { user } = context;
-    const url = await getSignInUrl({ data: '/faculty' });
-    return {
-      user,
-      url,
-    };
+    try {
+      const { user } = context;
+      const url = await getSignInUrl({ data: '/faculty' });
+      return {
+        user,
+        url,
+      };
+    } catch (error) {
+      console.warn('Sign-in URL generation error:', error);
+      return {
+        user: context?.user || null,
+        url: null,
+      };
+    }
   },
   component: RootComponent,
   notFoundComponent: () => (

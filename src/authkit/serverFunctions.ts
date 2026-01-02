@@ -5,18 +5,28 @@ import { getWorkOS } from './ssr/workos';
 import { getConfig } from './ssr/config';
 import { terminateSession, withAuth } from './ssr/session';
 
+// Helper function to handle WorkOS API errors gracefully
+function handleWorkOSError(error: any) {
+  console.warn('WorkOS API error:', error?.message || error);
+  return null;
+}
+
 export const getAuthorizationUrl = createServerFn({ method: 'GET' })
   .inputValidator((options?: GetAuthURLOptions) => options)
   .handler(({ data: options = {} }) => {
-    const { returnPathname, screenHint, redirectUri } = options;
+    try {
+      const { returnPathname, screenHint, redirectUri } = options;
 
-    return getWorkOS().userManagement.getAuthorizationUrl({
-      provider: 'authkit',
-      clientId: getConfig('clientId'),
-      redirectUri: redirectUri || getConfig('redirectUri'),
-      state: returnPathname ? btoa(JSON.stringify({ returnPathname })) : undefined,
-      screenHint,
-    });
+      return getWorkOS().userManagement.getAuthorizationUrl({
+        provider: 'authkit',
+        clientId: getConfig('clientId'),
+        redirectUri: redirectUri || getConfig('redirectUri'),
+        state: returnPathname ? btoa(JSON.stringify({ returnPathname })) : undefined,
+        screenHint,
+      });
+    } catch (error) {
+      return handleWorkOSError(error);
+    }
   });
 
 export const getSignInUrl = createServerFn({ method: 'GET' })
@@ -40,6 +50,11 @@ export const signOut = createServerFn({ method: 'POST' })
   });
 
 export const getAuth = createServerFn({ method: 'GET' }).handler(async (): Promise<UserInfo | NoUserInfo> => {
-  const auth = await withAuth();
-  return auth;
+  try {
+    const auth = await withAuth();
+    return auth;
+  } catch (error) {
+    console.warn('Auth error:', error instanceof Error ? error.message : String(error));
+    return { user: null };
+  }
 });

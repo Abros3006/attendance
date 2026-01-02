@@ -1,7 +1,7 @@
 import { Link } from '@tanstack/react-router';
 import type { User } from '@workos-inc/node';
 
-export default function SignInButton({ large, user, url }: { large?: boolean; user: User | null; url: string }) {
+export default function SignInButton({ large, user, url }: { large?: boolean; user: User | null; url: string | null }) {
   if (user) {
     return (
       <div className="flex items-center space-x-3">
@@ -18,6 +18,18 @@ export default function SignInButton({ large, user, url }: { large?: boolean; us
           Sign Out
         </Link>
       </div>
+    );
+  }
+
+  // If URL is not available, show a disabled button
+  if (!url) {
+    return (
+      <button 
+        className={`matte-button-disabled ${large ? 'px-8 py-4 text-lg' : 'px-6 py-3'} inline-block cursor-not-allowed`}
+        disabled
+      >
+        Loading...
+      </button>
     );
   }
 
