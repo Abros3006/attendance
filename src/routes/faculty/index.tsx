@@ -1,6 +1,6 @@
+import { getAuth } from '@/authkit/serverFunctions';
 import { createFileRoute, redirect } from '@tanstack/react-router';
 import { Link } from '@tanstack/react-router';
-import { getAuth } from '../authkit/serverFunctions';
 
 export const Route = createFileRoute('/faculty')({
   component: FacultyDashboard,
