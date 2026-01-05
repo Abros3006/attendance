@@ -16,7 +16,7 @@ function Home() {
   const { user, url } = Route.useLoaderData();
 
   return (
-    <div className="min-h-screen hero-solid flex items-center justify-center p-4">
+    <div className="min-h-screen bg-background flex items-center justify-center p-4">
       <div className="max-w-4xl w-full">
         {/* Header */}
         <div className="text-center mb-12">
@@ -24,7 +24,7 @@ function Home() {
             <h1 className="text-5xl font-bold text-foreground mb-4">
               MIT WPU Attendance System
             </h1>
-            <p className="text-xl text-accent-warm max-w-2xl mx-auto leading-relaxed">
+            <p className="text-xl text-warning max-w-2xl mx-auto leading-relaxed">
               Modernize your attendance tracking with our streamlined platform. 
               Fast, reliable, and designed for MIT WPU's academic excellence.
             </p>
@@ -34,7 +34,7 @@ function Home() {
         {/* Main Content Cards */}
         <div className="grid md:grid-cols-3 gap-6 mb-12">
           {/* Faculty Access Card */}
-          <div className="matte-card p-8 card-hover">
+          <div className="bg-card rounded-xl border border-border p-8 transition-all duration-200 hover:shadow-lg hover:scale-[1.02]">
             <div className="text-center">
               <div className="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-6">
                 <svg className="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -44,7 +44,7 @@ function Home() {
               <h2 className="text-2xl font-semibold text-foreground mb-4">
                 Faculty Portal
               </h2>
-              <p className="text-accent-warm mb-6 leading-relaxed">
+              <p className="text-warning mb-6 leading-relaxed">
                 Manage your classes, start attendance sessions, and track student participation with ease.
               </p>
               <SignInButton user={user} url={url} />
@@ -52,7 +52,7 @@ function Home() {
           </div>
 
           {/* Student Access Card */}
-          <div className="matte-card p-8 card-hover">
+          <div className="bg-card rounded-xl border border-border p-8 transition-all duration-200 hover:shadow-lg hover:scale-[1.02]">
             <div className="text-center">
               <div className="w-16 h-16 bg-secondary/10 rounded-full flex items-center justify-center mx-auto mb-6">
                 <svg className="w-8 h-8 text-secondary-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -62,12 +62,12 @@ function Home() {
               <h2 className="text-2xl font-semibold text-foreground mb-4">
                 Check Attendance
               </h2>
-              <p className="text-accent-cool mb-6 leading-relaxed">
+              <p className="text-accent mb-6 leading-relaxed">
                 View your attendance records, check your class participation, and track your academic progress.
               </p>
               <Link 
                 to="/check-attendance" 
-                className="matte-button-cool inline-block"
+                className="bg-secondary text-secondary-foreground px-6 py-3 rounded-lg font-medium hover:opacity-90 transition-opacity inline-block"
               >
                 Check My Attendance
               </Link>
@@ -75,7 +75,7 @@ function Home() {
           </div>
 
           {/* Join Class Card */}
-          <div className="matte-card-warm p-8 card-hover">
+          <div className="bg-card/50 rounded-xl border border-warning/20 p-8">
             <div className="text-center">
               <div className="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center mx-auto mb-6">
                 <svg className="w-8 h-8 text-accent-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -85,12 +85,12 @@ function Home() {
               <h2 className="text-2xl font-semibold text-foreground mb-4">
                 Join Class
               </h2>
-              <p className="text-accent-cyan mb-6 leading-relaxed">
+              <p className="text-ring mb-6 leading-relaxed">
                 Get access to your classes by joining with the unique Class ID provided by your faculty.
               </p>
               <Link 
                 to="/register-class" 
-                className="matte-button-warm inline-block"
+                className="bg-accent text-accent-foreground px-6 py-3 rounded-lg font-medium hover:opacity-90 transition-opacity inline-block"
               >
                 Join a Class
               </Link>
@@ -99,7 +99,7 @@ function Home() {
         </div>
 
         {/* Features Section */}
-        <div className="matte-card p-8">
+        <div className="bg-card rounded-xl border border-border p-8">
           <h3 className="text-2xl font-semibold text-foreground mb-6 text-center">
             Key Features
           </h3>
@@ -111,7 +111,7 @@ function Home() {
                 </svg>
               </div>
               <h4 className="font-semibold text-foreground mb-2">Fast & Efficient</h4>
-              <p className="text-accent-warm text-sm">2-minute attendance windows ensure quick and accurate tracking</p>
+              <p className="text-warning text-sm">2-minute attendance windows ensure quick and accurate tracking</p>
             </div>
             <div className="text-center">
               <div className="w-12 h-12 bg-accent/20 rounded-lg flex items-center justify-center mx-auto mb-4">
@@ -120,7 +120,7 @@ function Home() {
                 </svg>
               </div>
               <h4 className="font-semibold text-foreground mb-2">Real-time Tracking</h4>
-              <p className="text-accent-cyan text-sm">Live attendance monitoring and instant notifications</p>
+              <p className="text-ring text-sm">Live attendance monitoring and instant notifications</p>
             </div>
           </div>
         </div>

@@ -183,7 +183,7 @@ function CreateClass() {
   };
 
   return (
-    <div className="min-h-screen hero-solid flex items-center justify-center p-4">
+    <div className="min-h-screen bg-background flex items-center justify-center p-4">
       <div className="max-w-4xl w-full">
         {/* Header */}
         <div className="text-center mb-8">
@@ -196,7 +196,7 @@ function CreateClass() {
         </div>
 
         {/* Form Card */}
-        <div className="matte-card p-8">
+        <div className="bg-card rounded-xl border border-border p-8">
           <form onSubmit={handleSubmit} className="space-y-8">
             {/* Class Information */}
             <div className="space-y-6">
@@ -341,7 +341,7 @@ function CreateClass() {
 
               <div className="space-y-4">
                 {timetableEntries.map((entry, index) => (
-                  <div key={index} className="matte-card p-4 border border-border">
+                  <div key={index} className="bg-card rounded-xl border border-border p-4">
                     <div className="grid md:grid-cols-5 gap-4 items-end">
                       <div>
                         <label className="block text-sm font-medium text-foreground mb-2">
@@ -436,7 +436,7 @@ function CreateClass() {
 
         {/* Error/Success Messages */}
         {error && (
-          <div className="mt-6 matte-card p-4 border-l-4 border-red-500 bg-red-500/10">
+          <div className="mt-6 bg-card rounded-xl border border-border p-4 border-l-4 border-l-red-500 bg-red-500/10">
             <div className="flex items-center">
               <svg className="w-5 h-5 text-red-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -447,7 +447,7 @@ function CreateClass() {
         )}
 
         {success && (
-          <div className="mt-6 matte-card p-4 border-l-4 border-green-500 bg-green-500/10">
+          <div className="mt-6 bg-card rounded-xl border border-border p-4 border-l-4 border-l-green-500 bg-green-500/10">
             <div className="flex items-center">
               <svg className="w-5 h-5 text-green-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />

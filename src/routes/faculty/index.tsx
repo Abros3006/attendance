@@ -2,7 +2,8 @@ import { getAuth } from '@/authkit/serverFunctions';
 import { createFileRoute, redirect } from '@tanstack/react-router';
 import { Link } from '@tanstack/react-router';
 
-export const Route = createFileRoute('/faculty')({
+//@ts-ignore
+export const Route = createFileRoute('/faculty/')({
   component: FacultyDashboard,
   loader: async () => {
     try {
@@ -34,21 +35,21 @@ function FacultyDashboard() {
   const { user } = Route.useLoaderData();
 
   return (
-    <div className="min-h-screen hero-solid p-4">
+    <div className="min-h-screen bg-background p-4">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="mb-8">
           <h1 className="text-4xl font-bold text-foreground mb-2">
             Faculty Dashboard
           </h1>
-          <p className="text-accent-warm text-lg">
+          <p className="text-warning text-lg">
             Welcome back, {user?.firstName || user?.email}
           </p>
         </div>
 
         {/* Quick Actions */}
         <div className="grid md:grid-cols-3 gap-6 mb-8">
-          <div className="matte-card p-6 card-hover">
+          <div className="bg-card rounded-xl border border-border p-6 transition-all duration-200 hover:shadow-lg hover:scale-[1.02]">
             <div className="text-center">
               <div className="w-12 h-12 bg-primary/20 rounded-lg flex items-center justify-center mx-auto mb-4">
                 <svg className="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -56,14 +57,14 @@ function FacultyDashboard() {
                 </svg>
               </div>
               <h3 className="text-lg font-semibold text-foreground mb-2">Create Class</h3>
-              <p className="text-accent-warm text-sm mb-4">Create a new class and add students</p>
-              <Link to="/faculty/create-class" className="matte-button w-full block text-center">
+              <p className="text-warning text-sm mb-4">Create a new class and add students</p>
+              <Link to="/faculty/create-class" className="bg-primary text-primary-foreground font-medium hover:opacity-90 transition-opacity w-full py-3 block text-center rounded-lg">
                 New Class
               </Link>
             </div>
           </div>
 
-          <div className="matte-card p-6 card-hover">
+          <div className="bg-card rounded-xl border border-border p-6 transition-all duration-200 hover:shadow-lg hover:scale-[1.02]">
             <div className="text-center">
               <div className="w-12 h-12 bg-secondary/20 rounded-lg flex items-center justify-center mx-auto mb-4">
                 <svg className="w-6 h-6 text-secondary-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -71,14 +72,14 @@ function FacultyDashboard() {
                 </svg>
               </div>
               <h3 className="text-lg font-semibold text-foreground mb-2">Manage Timetable</h3>
-              <p className="text-accent-cool text-sm mb-4">Create and manage class schedules</p>
-              <button className="matte-button-cool w-full">
+              <p className="text-accent text-sm mb-4">Create and manage class schedules</p>
+              <button className="bg-secondary text-secondary-foreground font-medium hover:opacity-90 transition-opacity w-full py-3 rounded-lg">
                 View Timetable
               </button>
             </div>
           </div>
 
-          <div className="matte-card p-6 card-hover">
+          <div className="bg-card rounded-xl border border-border p-6 transition-all duration-200 hover:shadow-lg hover:scale-[1.02]">
             <div className="text-center">
               <div className="w-12 h-12 bg-accent/20 rounded-lg flex items-center justify-center mx-auto mb-4">
                 <svg className="w-6 h-6 text-accent-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -86,8 +87,8 @@ function FacultyDashboard() {
                 </svg>
               </div>
               <h3 className="text-lg font-semibold text-foreground mb-2">Start Session</h3>
-              <p className="text-accent-cyan text-sm mb-4">Begin an attendance session</p>
-              <button className="matte-button-warm w-full">
+              <p className="text-ring text-sm mb-4">Begin an attendance session</p>
+              <button className="bg-accent text-accent-foreground font-medium hover:opacity-90 transition-opacity w-full py-3 rounded-lg">
                 Start Now
               </button>
             </div>
@@ -95,7 +96,7 @@ function FacultyDashboard() {
         </div>
 
         {/* Recent Activity */}
-        <div className="matte-card p-6">
+        <div className="bg-card rounded-xl border border-border p-6">
           <h2 className="text-2xl font-semibold text-foreground mb-6">Recent Activity</h2>
           <div className="space-y-4">
             <div className="flex items-center justify-between p-4 bg-background/50 rounded-lg">

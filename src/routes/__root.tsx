@@ -49,11 +49,11 @@ export const Route = createRootRoute({
   },
   component: RootComponent,
   notFoundComponent: () => (
-    <div className="min-h-screen flex items-center justify-center bg-background">
-      <div className="matte-card p-8 text-center">
+    <div className="min-h-screen bg-background flex items-center justify-center">
+      <div className="bg-card rounded-xl border border-border p-8 text-center">
         <h1 className="text-2xl font-bold text-foreground mb-4">Page Not Found</h1>
-        <p className="text-matte mb-6">The page you're looking for doesn't exist.</p>
-        <Link to="/" className="matte-button inline-block">
+        <p className="text-muted-foreground mb-6">The page you're looking for doesn't exist.</p>
+        <Link to="/" className="bg-primary text-primary-foreground px-6 py-3 rounded-lg font-medium hover:opacity-90 transition-opacity inline-block">
           Go Home
         </Link>
       </div>
@@ -125,7 +125,7 @@ function RootComponent() {
         <footer className="border-t border-border/50 bg-background/50 backdrop-blur-sm">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
             <div className="text-center">
-              <p className="text-matte text-sm">
+              <p className="text-muted-foreground text-sm">
                 © 2024 MIT WPU Attendance System. Designed for academic excellence.
               </p>
             </div>

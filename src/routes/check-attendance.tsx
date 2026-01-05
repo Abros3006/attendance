@@ -131,20 +131,20 @@ function CheckAttendance() {
   };
 
   return (
-    <div className="min-h-screen hero-solid flex items-center justify-center p-4">
+    <div className="min-h-screen bg-background flex items-center justify-center p-4">
       <div className="max-w-2xl w-full">
         {/* Header */}
         <div className="text-center mb-8">
           <h1 className="text-4xl font-bold text-foreground mb-4">
             Check Your Attendance
           </h1>
-          <p className="text-accent-warm text-lg max-w-lg mx-auto">
+          <p className="text-warning text-lg max-w-lg mx-auto">
             View your attendance records across all classes. Enter your details below to get started.
           </p>
         </div>
 
         {/* Form Card */}
-        <div className="matte-card p-8">
+        <div className="bg-card rounded-xl border border-border p-8">
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Student Information */}
             <div className="space-y-4">
@@ -189,7 +189,7 @@ function CheckAttendance() {
             <button
               type="submit"
               disabled={loading}
-              className="matte-button w-full py-3 text-lg disabled:opacity-50 disabled:cursor-not-allowed"
+              className="bg-primary text-primary-foreground w-full py-3 text-lg font-medium hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {loading ? 'Checking...' : 'Check My Attendance'}
             </button>
@@ -198,7 +198,7 @@ function CheckAttendance() {
 
         {/* Information Cards */}
         <div className="mt-8 grid md:grid-cols-2 gap-6">
-          <div className="matte-card-accent p-6">
+          <div className="bg-card/50 rounded-xl border border-accent/20 p-6">
             <div className="text-center">
               <div className="w-12 h-12 bg-primary/20 rounded-lg flex items-center justify-center mx-auto mb-4">
                 <svg className="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -206,13 +206,13 @@ function CheckAttendance() {
                 </svg>
               </div>
               <h3 className="text-lg font-semibold text-foreground mb-2">View Records</h3>
-              <p className="text-accent-warm text-sm">
+              <p className="text-warning text-sm">
                 See your attendance history across all enrolled classes
               </p>
             </div>
           </div>
 
-          <div className="matte-card-warm p-6">
+          <div className="bg-card/50 rounded-xl border border-warning/20 p-6">
             <div className="text-center">
               <div className="w-12 h-12 bg-secondary/20 rounded-lg flex items-center justify-center mx-auto mb-4">
                 <svg className="w-6 h-6 text-secondary-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -220,7 +220,7 @@ function CheckAttendance() {
                 </svg>
               </div>
               <h3 className="text-lg font-semibold text-foreground mb-2">Quick Access</h3>
-              <p className="text-accent-cool text-sm">
+              <p className="text-accent text-sm">
                 Instant access to your attendance data anytime
               </p>
             </div>
@@ -236,7 +236,7 @@ function CheckAttendance() {
 
         {/* Error Message */}
         {error && (
-          <div className="mt-6 matte-card p-4 border-l-4 border-red-500 bg-red-500/10">
+          <div className="mt-6 bg-card rounded-xl border border-border p-4 border-l-4 border-l-red-500 bg-red-500/10">
             <div className="flex items-center">
               <svg className="w-5 h-5 text-red-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -250,7 +250,7 @@ function CheckAttendance() {
         {student && (
           <div className="mt-8 space-y-6">
             {/* Student Info Card */}
-            <div className="matte-card-accent p-6">
+            <div className="bg-card/50 rounded-xl border border-accent/20 p-6">
               <h2 className="text-2xl font-semibold text-foreground mb-4">Student Information</h2>
               <div className="grid md:grid-cols-2 gap-4">
                 <div>
@@ -269,7 +269,7 @@ function CheckAttendance() {
             </div>
 
             {/* Attendance Summary */}
-            <div className="matte-card p-6">
+            <div className="bg-card rounded-xl border border-border p-6">
               <h3 className="text-xl font-semibold text-foreground mb-4">Attendance Summary</h3>
               <div className="grid md:grid-cols-3 gap-6">
                 <div className="text-center">
@@ -277,11 +277,11 @@ function CheckAttendance() {
                   <p className="text-muted-foreground">Total Sessions</p>
                 </div>
                 <div className="text-center">
-                  <div className="text-3xl font-bold text-green-500 mb-2">{presentSessions}</div>
+                  <div className="text-3xl font-bold text-success mb-2">{presentSessions}</div>
                   <p className="text-muted-foreground">Present</p>
                 </div>
                 <div className="text-center">
-                  <div className="text-3xl font-bold text-accent-cyan mb-2">{attendancePercentage}%</div>
+                  <div className="text-3xl font-bold text-ring mb-2">{attendancePercentage}%</div>
                   <p className="text-muted-foreground">Attendance Rate</p>
                 </div>
               </div>
@@ -289,14 +289,14 @@ function CheckAttendance() {
 
             {/* Attendance Records */}
             {attendanceRecords.length > 0 && (
-              <div className="matte-card p-6">
+              <div className="bg-card rounded-xl border border-border p-6">
                 <h3 className="text-xl font-semibold text-foreground mb-4">Recent Attendance Records</h3>
                 <div className="space-y-3">
                   {attendanceRecords.slice(0, 10).map((record, index) => (
                     <div key={index} className="flex items-center justify-between p-3 bg-background/50 rounded-lg">
                       <div className="flex items-center space-x-3">
                         <div className={`w-3 h-3 rounded-full ${
-                          record.attendance.status === 'present' ? 'bg-green-500' : 'bg-red-500'
+                          record.attendance.status === 'present' ? 'bg-success' : 'bg-error'
                         }`}></div>
                         <div>
                           <p className="text-foreground font-medium">{record.class.name} ({record.class.code})</p>
@@ -307,7 +307,7 @@ function CheckAttendance() {
                       </div>
                       <div className="text-right">
                         <p className={`font-medium ${
-                          record.attendance.status === 'present' ? 'text-green-500' : 'text-red-500'
+                          record.attendance.status === 'present' ? 'text-success' : 'text-error'
                         }`}>
                           {record.attendance.status === 'present' ? 'Present' : 'Absent'}
                         </p>
@@ -330,7 +330,7 @@ function CheckAttendance() {
 
             {/* No Records Message */}
             {attendanceRecords.length === 0 && (
-              <div className="matte-card p-6 text-center">
+              <div className="bg-card rounded-xl border border-border p-6 text-center">
                 <p className="text-muted-foreground">No attendance records found for this student.</p>
               </div>
             )}

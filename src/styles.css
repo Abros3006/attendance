@@ -19,76 +19,60 @@ code {
 }
 
 :root {
-  /* Dark Professional Theme with Colorful Accents */
-  --background: oklch(0.18 0.03 240);
-  --foreground: oklch(0.95 0.02 240);
-  --card: oklch(0.22 0.04 240);
-  --card-foreground: oklch(0.95 0.02 240);
-  --popover: oklch(0.22 0.04 240);
-  --popover-foreground: oklch(0.95 0.02 240);
-  --primary: oklch(0.65 0.18 235);
-  --primary-foreground: oklch(0.98 0.01 240);
-  --secondary: oklch(0.28 0.08 280);
-  --secondary-foreground: oklch(0.95 0.02 240);
-  --muted: oklch(0.25 0.06 260);
-  --muted-foreground: oklch(0.75 0.08 240);
-  --accent: oklch(0.55 0.15 45);
-  --accent-foreground: oklch(0.15 0.02 240);
-  --destructive: oklch(0.65 0.30 25);
-  --destructive-foreground: oklch(0.98 0.01 240);
-  --border: oklch(0.35 0.08 240);
-  --input: oklch(0.30 0.08 250);
-  --ring: oklch(0.65 0.18 235);
-  --chart-1: oklch(0.65 0.18 235);
-  --chart-2: oklch(0.60 0.20 140);
-  --chart-3: oklch(0.70 0.15 320);
-  --chart-4: oklch(0.75 0.12 200);
-  --chart-5: oklch(0.68 0.16 280);
+  /* Professional 3-Color System: Navy Blue, Slate Gray, Accent Teal */
+  --background: #1a1f2e;
+  --foreground: #e8eaf0;
+  --card: #212736;
+  --card-foreground: #e8eaf0;
+  --popover: #212736;
+  --popover-foreground: #e8eaf0;
+  
+  /* Primary: Professional Navy Blue */
+  --primary: #2d3e5f;
+  --primary-foreground: #ffffff;
+  
+  /* Secondary: Muted Slate Gray */
+  --secondary: #3a4556;
+  --secondary-foreground: #e8eaf0;
+  
+  /* Accent: Subtle Teal for highlights */
+  --accent: #4a9b8e;
+  --accent-foreground: #ffffff;
+  
+  --muted: #2a3142;
+  --muted-foreground: #9ca3af;
+  --destructive: #b91c1c;
+  --destructive-foreground: #ffffff;
+  --border: #3a4556;
+  --input: #2a3142;
+  --ring: #4a9b8e;
+  
+  /* Status colors - keeping it minimal */
+  --success: #4a9b8e;
+  --warning: #d97706;
+  --error: #b91c1c;
+  
   --radius: 0.5rem;
-  --sidebar: oklch(0.22 0.04 240);
-  --sidebar-foreground: oklch(0.95 0.02 240);
-  --sidebar-primary: oklch(0.65 0.18 235);
-  --sidebar-primary-foreground: oklch(0.98 0.01 240);
-  --sidebar-accent: oklch(0.28 0.08 280);
-  --sidebar-accent-foreground: oklch(0.95 0.02 240);
-  --sidebar-border: oklch(0.35 0.08 240);
-  --sidebar-ring: oklch(0.65 0.18 235);
 }
 
 .dark {
-  /* Even Darker Theme with Vibrant Accents */
-  --background: oklch(0.08 0.02 240);
-  --foreground: oklch(0.98 0.01 240);
-  --card: oklch(0.12 0.03 240);
-  --card-foreground: oklch(0.98 0.01 240);
-  --popover: oklch(0.12 0.03 240);
-  --popover-foreground: oklch(0.98 0.01 240);
-  --primary: oklch(0.70 0.20 235);
-  --primary-foreground: oklch(0.05 0.01 240);
-  --secondary: oklch(0.35 0.10 280);
-  --secondary-foreground: oklch(0.98 0.01 240);
-  --muted: oklch(0.15 0.05 260);
-  --muted-foreground: oklch(0.80 0.08 240);
-  --accent: oklch(0.65 0.18 45);
-  --accent-foreground: oklch(0.08 0.02 240);
-  --destructive: oklch(0.70 0.32 25);
-  --destructive-foreground: oklch(0.98 0.01 240);
-  --border: oklch(0.25 0.08 240);
-  --input: oklch(0.20 0.08 250);
-  --ring: oklch(0.70 0.20 235);
-  --chart-1: oklch(0.70 0.20 235);
-  --chart-2: oklch(0.68 0.22 140);
-  --chart-3: oklch(0.75 0.18 320);
-  --chart-4: oklch(0.78 0.15 200);
-  --chart-5: oklch(0.72 0.19 280);
-  --sidebar: oklch(0.12 0.03 240);
-  --sidebar-foreground: oklch(0.98 0.01 240);
-  --sidebar-primary: oklch(0.70 0.20 235);
-  --sidebar-primary-foreground: oklch(0.05 0.01 240);
-  --sidebar-accent: oklch(0.35 0.10 280);
-  --sidebar-accent-foreground: oklch(0.98 0.01 240);
-  --sidebar-border: oklch(0.25 0.08 240);
-  --sidebar-ring: oklch(0.70 0.20 235);
+  --background: #0f1419;
+  --foreground: #f1f5f9;
+  --card: #1a1f2e;
+  --card-foreground: #f1f5f9;
+  --popover: #1a1f2e;
+  --popover-foreground: #f1f5f9;
+  --primary: #3d5a80;
+  --primary-foreground: #ffffff;
+  --secondary: #2d3748;
+  --secondary-foreground: #f1f5f9;
+  --accent: #5ab4a3;
+  --accent-foreground: #ffffff;
+  --muted: #1e2633;
+  --muted-foreground: #94a3b8;
+  --border: #2d3748;
+  --input: #1e2633;
+  --ring: #5ab4a3;
 }
 
 @theme inline {
@@ -111,23 +95,13 @@ code {
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
-  --color-chart-1: var(--chart-1);
-  --color-chart-2: var(--chart-2);
-  --color-chart-3: var(--chart-3);
-  --color-chart-4: var(--chart-4);
-  --color-chart-5: var(--chart-5);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-error: var(--error);
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
-  --color-sidebar: var(--sidebar);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-ring: var(--sidebar-ring);
 }
 
 @layer base {
@@ -137,156 +111,4 @@ code {
   body {
     @apply bg-background text-foreground;
   }
-}
-
-/* Custom matte finish styles with colorful accents */
-.matte-card {
-  @apply bg-card border border-border/50 rounded-lg shadow-sm;
-  backdrop-filter: blur(8px);
-  background: rgba(45, 55, 72, 0.95);
-}
-
-.dark .matte-card {
-  background: rgba(26, 32, 44, 0.95);
-}
-
-.matte-card-accent {
-  @apply bg-card border border-border/50 rounded-lg shadow-sm;
-  backdrop-filter: blur(8px);
-  background: rgba(72, 187, 120, 0.15);
-  border-color: rgba(72, 187, 120, 0.3);
-}
-
-.dark .matte-card-accent {
-  background: rgba(72, 187, 120, 0.25);
-  border-color: rgba(72, 187, 120, 0.4);
-}
-
-.matte-card-warm {
-  @apply bg-card border border-border/50 rounded-lg shadow-sm;
-  backdrop-filter: blur(8px);
-  background: rgba(245, 158, 11, 0.15);
-  border-color: rgba(245, 158, 11, 0.3);
-}
-
-.dark .matte-card-warm {
-  background: rgba(245, 158, 11, 0.25);
-  border-color: rgba(245, 158, 11, 0.4);
-}
-
-.matte-button {
-  @apply bg-primary text-primary-foreground px-6 py-3 rounded-lg font-medium transition-all duration-200;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  border: 1px solid transparent;
-}
-
-.matte-button:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-}
-
-.matte-button-secondary {
-  @apply bg-secondary text-secondary-foreground px-6 py-3 rounded-lg font-medium transition-all duration-200;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  border: 1px solid rgba(0, 0, 0, 0.1);
-}
-
-.matte-button-secondary:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-}
-
-.matte-button-warm {
-  background: oklch(0.55 0.15 45);
-  color: oklch(0.98 0.01 240);
-  @apply px-6 py-3 rounded-lg font-medium transition-all duration-200;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  border: 1px solid rgba(245, 158, 11, 0.3);
-}
-
-.matte-button-warm:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-  background: oklch(0.60 0.18 45);
-}
-
-.matte-button-cool {
-  background: oklch(0.60 0.20 140);
-  color: oklch(0.98 0.01 240);
-  @apply px-6 py-3 rounded-lg font-medium transition-all duration-200;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  border: 1px solid rgba(16, 185, 129, 0.3);
-}
-
-.matte-button-cool:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-  background: oklch(0.65 0.22 140);
-}
-
-.hero-solid {
-  background: oklch(0.22 0.04 240);
-}
-
-.dark .hero-solid {
-  background: oklch(0.12 0.03 240);
-}
-
-.text-matte {
-  @apply text-muted-foreground;
-  opacity: 0.8;
-}
-
-.text-accent-warm {
-  color: oklch(0.65 0.18 45);
-}
-
-.text-accent-cool {
-  color: oklch(0.60 0.20 140);
-}
-
-.text-accent-purple {
-  color: oklch(0.70 0.15 320);
-}
-
-.text-accent-cyan {
-  color: oklch(0.75 0.12 200);
-}
-
-.card-hover {
-  @apply transition-all duration-300 ease-in-out;
-}
-
-.card-hover:hover {
-  @apply scale-105 shadow-lg;
-}
-
-/* Additional utility classes for consistent theming */
-.bg-matte {
-  @apply bg-background;
-}
-
-.text-matte-strong {
-  @apply text-muted-foreground;
-  opacity: 0.9;
-}
-
-.border-matte {
-  @apply border-border/50;
-}
-
-.shadow-matte {
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-}
-
-.dark .shadow-matte {
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
-}
-
-.solid-matte {
-  background: oklch(0.25 0.06 260);
-}
-
-.dark .solid-matte {
-  background: oklch(0.15 0.05 260);
 }

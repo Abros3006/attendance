@@ -7,13 +7,13 @@ export default function SignInButton({ large, user, url }: { large?: boolean; us
       <div className="flex items-center space-x-3">
         <Link 
           to="/faculty" 
-          className={`matte-button ${large ? 'px-8 py-4 text-lg' : 'px-6 py-2'} inline-block`}
+          className={`bg-primary text-primary-foreground font-medium hover:opacity-90 transition-opacity ${large ? 'px-8 py-4 text-lg' : 'px-6 py-2'} inline-block`}
         >
           Go to Dashboard
         </Link>
         <Link 
           to="/logout" 
-          className={`matte-button-secondary ${large ? 'px-6 py-3' : 'px-4 py-2'} inline-block`}
+          className={`bg-muted text-muted-foreground font-medium hover:bg-muted/80 transition-colors ${large ? 'px-6 py-3' : 'px-4 py-2'} inline-block`}
         >
           Sign Out
         </Link>
@@ -25,7 +25,7 @@ export default function SignInButton({ large, user, url }: { large?: boolean; us
   if (!url) {
     return (
       <button 
-        className={`matte-button-disabled ${large ? 'px-8 py-4 text-lg' : 'px-6 py-3'} inline-block cursor-not-allowed`}
+        className={`bg-muted text-muted-foreground font-medium cursor-not-allowed opacity-50 ${large ? 'px-8 py-4 text-lg' : 'px-6 py-3'} inline-block`}
         disabled
       >
         Loading...
@@ -36,7 +36,7 @@ export default function SignInButton({ large, user, url }: { large?: boolean; us
   return (
     <a 
       href={url}
-      className={`matte-button ${large ? 'px-8 py-4 text-lg' : 'px-6 py-3'} inline-block`}
+      className={`bg-primary text-primary-foreground font-medium hover:opacity-90 transition-opacity ${large ? 'px-8 py-4 text-lg' : 'px-6 py-3'} inline-block`}
     >
       Sign In{large && ' with AuthKit'}
     </a>

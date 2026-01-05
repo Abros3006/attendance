@@ -132,20 +132,20 @@ function RegisterClass() {
   };
 
   return (
-    <div className="min-h-screen hero-solid flex items-center justify-center p-4">
+    <div className="min-h-screen bg-background flex items-center justify-center p-4">
       <div className="max-w-2xl w-full">
         {/* Header */}
         <div className="text-center mb-8">
           <h1 className="text-4xl font-bold text-foreground mb-4">
             Join a Class
           </h1>
-          <p className="text-accent-cool text-lg max-w-lg mx-auto">
+          <p className="text-accent text-lg max-w-lg mx-auto">
             Enter the class details provided by your faculty member to join the class and get access to attendance sessions.
           </p>
         </div>
 
         {/* Form Card */}
-        <div className="matte-card p-8">
+        <div className="bg-card rounded-xl border border-border p-8">
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Class Information */}
             <div className="space-y-4">
@@ -172,7 +172,7 @@ function RegisterClass() {
                     type="button"
                     onClick={handleCheckClass}
                     disabled={loading || !formData.classId}
-                    className="matte-button-secondary px-4 py-3 disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="bg-muted text-muted-foreground px-4 py-3 font-medium hover:bg-muted/80 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     Check
                   </button>
@@ -249,7 +249,7 @@ function RegisterClass() {
             <button
               type="submit"
               disabled={loading || !agreedToTerms}
-              className="matte-button-cool w-full py-3 text-lg disabled:opacity-50 disabled:cursor-not-allowed"
+              className="bg-secondary text-secondary-foreground w-full py-3 text-lg font-medium hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {loading ? 'Joining...' : 'Join Class'}
             </button>
@@ -258,7 +258,7 @@ function RegisterClass() {
 
         {/* Information Cards */}
         <div className="mt-8 grid md:grid-cols-3 gap-6">
-          <div className="matte-card-accent p-6">
+          <div className="bg-card/50 rounded-xl border border-accent/20 p-6">
             <div className="text-center">
               <div className="w-12 h-12 bg-primary/20 rounded-lg flex items-center justify-center mx-auto mb-4">
                 <svg className="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -266,13 +266,13 @@ function RegisterClass() {
                 </svg>
               </div>
               <h3 className="text-lg font-semibold text-foreground mb-2">Easy Access</h3>
-              <p className="text-accent-warm text-sm">
+              <p className="text-warning text-sm">
                 Join classes with just a simple form submission
               </p>
             </div>
           </div>
 
-          <div className="matte-card-warm p-6">
+          <div className="bg-card/50 rounded-xl border border-warning/20 p-6">
             <div className="text-center">
               <div className="w-12 h-12 bg-secondary/20 rounded-lg flex items-center justify-center mx-auto mb-4">
                 <svg className="w-6 h-6 text-secondary-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -280,13 +280,13 @@ function RegisterClass() {
                 </svg>
               </div>
               <h3 className="text-lg font-semibold text-foreground mb-2">Verified</h3>
-              <p className="text-accent-cool text-sm">
+              <p className="text-accent text-sm">
                 Your enrollment is verified through faculty validation
               </p>
             </div>
           </div>
 
-          <div className="matte-card p-6">
+          <div className="bg-card rounded-xl border border-border p-6">
             <div className="text-center">
               <div className="w-12 h-12 bg-accent/20 rounded-lg flex items-center justify-center mx-auto mb-4">
                 <svg className="w-6 h-6 text-accent-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -294,7 +294,7 @@ function RegisterClass() {
                 </svg>
               </div>
               <h3 className="text-lg font-semibold text-foreground mb-2">Secure</h3>
-              <p className="text-accent-cyan text-sm">
+              <p className="text-ring text-sm">
                 Your data is protected with secure enrollment process
               </p>
             </div>
@@ -310,7 +310,7 @@ function RegisterClass() {
 
         {/* Error/Success Messages */}
         {error && (
-          <div className="mt-6 matte-card p-4 border-l-4 border-red-500 bg-red-500/10">
+          <div className="mt-6 bg-card rounded-xl border border-border p-4 border-l-4 border-l-red-500 bg-red-500/10">
             <div className="flex items-center">
               <svg className="w-5 h-5 text-red-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -321,19 +321,19 @@ function RegisterClass() {
         )}
 
         {success && (
-          <div className="mt-6 matte-card p-4 border-l-4 border-green-500 bg-green-500/10">
+          <div className="mt-6 bg-card rounded-xl border border-border p-4 border-l-4 border-l-success bg-success/10">
             <div className="flex items-center">
-              <svg className="w-5 h-5 text-green-500 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-5 h-5 text-success mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
-              <p className="text-green-500">{success}</p>
+              <p className="text-success">{success}</p>
             </div>
           </div>
         )}
 
         {/* Class Information */}
         {classData && (
-          <div className="mt-6 matte-card-accent p-6">
+          <div className="mt-6 bg-card/50 rounded-xl border border-accent/20 p-6">
             <h3 className="text-xl font-semibold text-foreground mb-4">Class Information</h3>
             <div className="grid md:grid-cols-2 gap-4">
               <div>
